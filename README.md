@@ -11,14 +11,13 @@ clone this repository into your local machine.
 cd to_project_directory
 npm install
 npm start
-
 ```
-wait for the client dependencies to be installed
+wait for the client dependencies to be installed and
 visit `http://127.0.0.1:3000` not the regular `localhost:3000` in your browser.
 
 ## Functionality
 
-####Login
+#### Login
 
 * User can login using Twitter authentication.
 * authentication persists across different tabs and for a returning user.
