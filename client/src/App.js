@@ -1,21 +1,38 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Login from './containers/Login';
+import {connect} from 'react-redux';
+import {checkAuthentication} from './actions/authentication'
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
+
+    componentDidMount(){
+        this.props.dispatch(checkAuthentication());
+    }
+
+    render() {
+        let content = '';
+
+        const {isAuthenticated, user} = this.props;
+
+        if(isAuthenticated){
+            content = (<p>{user.name}</p>);
+        }
+
+        return (
+            <div>
+                <Login />
+                {content}
+            </div>
+        );
+    }
+}
+const mapStateToProps = state => {
+  const { authentication } = state
+
+  return {
+    isAuthenticated : authentication.isAuthenticated,
+    user : authentication.user
   }
 }
 
-export default App;
+export default connect(mapStateToProps)(App);
