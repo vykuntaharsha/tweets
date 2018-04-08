@@ -4,7 +4,6 @@ import {login, logout} from '../actions/authentication';
 
 class Login extends Component {
 
-
     render(){
         let content;
 
@@ -12,14 +11,21 @@ class Login extends Component {
 
         if(!isAuthenticated){
 
-            content = (<button onClick={() => dispatch(login())}>sign in with twitter</button>);
+            content = (
+                <button className="btn btn-primary"
+                    onClick={() => dispatch(login())} >
+                    <i class="fab fa-twitter"></i> sign in with twitter
+                </button>
+            );
 
         }
-        if (isAuthenticated) {
-            content = (<button onClick={() => dispatch(logout())}>sign out</button>);
-        }
         if(loginLoading){
-            content = (<span> waiting for login </span>);
+            content = (
+                <div>
+                    <i class="fas fa-spinner"></i>
+                    <p>Waiting for authentication</p>
+                </div>
+            );
         }
 
         return (

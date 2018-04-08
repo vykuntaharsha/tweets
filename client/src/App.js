@@ -1,38 +1,25 @@
 import React, { Component } from 'react';
 import Login from './containers/Login';
-import {connect} from 'react-redux';
-import {checkAuthentication} from './actions/authentication'
+import Nav from './components/Nav';
+import Home from './containers/Home';
+import Profile from './containers/Profile';
+import FollowSuggestions from './containers/FollowSuggestions';
+import Trends from './containers/Trends';
+import Footer from './components/Footer';
 
-class App extends Component {
+const App =  () => {
 
-    componentDidMount(){
-        this.props.dispatch(checkAuthentication());
-    }
+    return (
+        <div>
+            <Login />
+            <Nav />
+            <Trends />
+            <Home />
+            <Profile />
+            <FollowSuggestions />
+            <Footer/>
+        </div>
+    );
+};
 
-    render() {
-        let content = '';
-
-        const {isAuthenticated, user} = this.props;
-
-        if(isAuthenticated){
-            content = (<p>{user.name}</p>);
-        }
-
-        return (
-            <div>
-                <Login />
-                {content}
-            </div>
-        );
-    }
-}
-const mapStateToProps = state => {
-  const { authentication } = state
-
-  return {
-    isAuthenticated : authentication.isAuthenticated,
-    user : authentication.user
-  }
-}
-
-export default connect(mapStateToProps)(App);
+export default App;

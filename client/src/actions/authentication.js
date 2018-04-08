@@ -7,13 +7,12 @@ export const login = () => dispatch => {
     return services.requetTokenForTwitter()
         .then( tokenData => Promise.resolve(tokenData.oauth_token))
         .then( oAuthToken => {
-            signInOnTwitter(oAuthToken, (oAuthData) => {
-                if( !oAuthData ) throw new Error('cannot login');
+            signInOnTwitter(oAuthToken, (oAuthData, error) => {
+                if( error || !oAuthData ) return dispatch({ type : auth.LOGIN_FAILURE });
 
                 services.login(oAuthData.oAuthVerifier, oAuthData.oAuthToken)
                 .then( data => {
                     localStorage.setItem('sessionToken', data.token);
-                    console.log(localStorage.getItem('sessionToken'));
                     dispatch({ type : auth.LOGIN_SUCCESS, user : data.user });
                 })
                 .catch( error => {
@@ -52,7 +51,12 @@ export const checkAuthentication = () => dispatch => {
 const signInOnTwitter = (oAuthToken, callback) => {
     const url = `https://api.twitter.com/oauth/authenticate?oauth_token=${oAuthToken}`;
     const popup = window.open('', '');
-    popup.location = url;
+    try {
+        popup.location = url;
+    } catch (e) {
+        return callback(null, new Error('popup-blocked'));
+    }
+
     getLoginStatus(popup, (tokenData) => {
         return callback(tokenData);
     });
@@ -61,21 +65,22 @@ const signInOnTwitter = (oAuthToken, callback) => {
 const getLoginStatus = (popup, callback) => {
     const polling = setInterval(() => {
       if (!popup || popup.closed || popup.closed === undefined) {
-        clearInterval(polling);
+          callback(null, new Error('popup-closed'));
+          clearInterval(polling);
       }
 
       const closeDialog = () => {
-        clearInterval(polling);
-        popup.close();
+          clearInterval(polling);
+          popup.close();
       };
 
       try {
           if (popup.location.search) {
-            const query = new URLSearchParams(popup.location.search);
-            const oAuthToken = query.get('oauth_token');
-            const oAuthVerifier = query.get('oauth_verifier');
-            closeDialog();
-            return callback({oAuthVerifier, oAuthToken});
+              const query = new URLSearchParams(popup.location.search);
+              const oAuthToken = query.get('oauth_token');
+              const oAuthVerifier = query.get('oauth_verifier');
+              closeDialog();
+              return callback({oAuthVerifier, oAuthToken}, null);
           }
       } catch (error) {
 
