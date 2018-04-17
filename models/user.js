@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const timestamps = require('mongoose-timestamp');
+const Follower = require('./follower');
 
 const Schema = mongoose.Schema;
 
@@ -31,11 +32,6 @@ const userSchema = new Schema({
 
     description : String,
 
-    private : {
-        type : Boolean,
-        default : false
-    },
-
     verified : {
         type : Boolean,
         default : false
@@ -46,17 +42,18 @@ const userSchema = new Schema({
         default : 0
     },
 
-    friendsCount : {
+    followingCount :{
+        type : Number,
+        default : 0
+    },
+
+    tweetsCount : {
         type : Number,
         default : 0
     },
 
     profilePicture : String,
-
-    sessionTokens : {
-        type : [String],
-        select : false
-    },
+    profileBackground : String,
 
     twitterTokens : {
         type : {
@@ -69,58 +66,40 @@ const userSchema = new Schema({
 
 userSchema.plugin(timestamps);
 
+userSchema.post('save', (doc)=>{
+    Follower.create({
+        follower : doc._id,
+        followee : doc._id,
+        accepted : true
+    })
+});
+
+
 const User = mongoose.model('User', userSchema);
 
-User.getUsers = function (callback, noOfUsers){
-    this.find()
-    .limit(noOfUsers)
-    .exec(callback);
+User.getUsers = function (noOfUsers){
+    return this.find().limit(noOfUsers).exec();
 };
 
-User.getOrCreateUser = function (token, tokenSecret, profile, callback){
+User.createUser = function (token, tokenSecret, profile){
+    const background = profile.profile_background_image_url || 'http://abs.twimg.com/images/themes/theme1/bg.png' ;
 
-    this.findOne({ twitterId : profile.id })
-    .exec( (err, user)=> {
+    const profilePicture = profile.profile_image_url || 'http://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png'
 
-        if(!user){
-            const userData = profile._json
-            const newUser = {
-                twitterId : userData.id_str,
-                name : userData.name,
-                screenName : userData.screen_name,
-                profilePicture : userData.profile_image_url,
-                twitterTokens : {
-                    token : token,
-                    tokenSecret : tokenSecret
-                }
-            };
-
-            return User.create(newUser, callback(err, user));
-
-        }else {
-            return callback(null, user);
+    const newUser = {
+        twitterId : profile.id_str,
+        name : profile.name,
+        screenName : profile.screen_name,
+        profilePicture : profilePicture,
+        profileBackground : background,
+        twitterTokens : {
+            token : token,
+            tokenSecret : tokenSecret
         }
-    });
+    };
+
+    return this.create(newUser);
 };
 
-User.getUserByName = function (name, callback){
-    this.find({name})
-    .exec(callback);
-};
-
-User.getSessionTokens = function (id, callback){
-    this.findById(id).select('sessionTokens').exec(callback);
-};
-
-
-User.addSessionToken = function (id, token, callback) {
-    this.findByIdAndUpdate(id, {$push : {sessionTokens : token }}, {new : true})
-    .exec(callback);
-};
-
-User.removeSessionToken = function (id, token, callback){
-    this.findByIdAndUpdate(id, {$pull : {sessionTokens : token }}, {new : true})
-    .exec(callback);
-};
 
 module.exports = User;

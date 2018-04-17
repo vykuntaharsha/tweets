@@ -5,13 +5,9 @@ module.exports = (req, res) => {
         res.status(400).send('invalid token');
     }
 
-    const tokenId = req.headers.authorization.split(' ')[1];
     const userId = req.auth.id;
 
-    User.removeSessionToken(userId, tokenId, (error, result )=> {
-        if(error){
-            return res.status(500).send('Something is not right');
-        }
-        return res.status(200).send('user logged out');
-    });
+    User.findById( userId ).exec()
+        .then(user => user ? res.status(200).json({message : 'user logged out'}) : Promise.reject('not authorized'))
+        .catch(error => res.status(400).json({message: 'user not registered'}));
 };

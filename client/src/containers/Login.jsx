@@ -1,8 +1,12 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {login, logout} from '../actions/authentication';
+import {login, checkAuthentication} from '../actions/authentication';
 
 class Login extends Component {
+
+    componentDidMount(){
+        this.props.dispatch(checkAuthentication());
+    }
 
     render(){
         let content;
@@ -14,7 +18,7 @@ class Login extends Component {
             content = (
                 <button className="btn btn-primary"
                     onClick={() => dispatch(login())} >
-                    <i class="fab fa-twitter"></i> sign in with twitter
+                    <i className="fab fa-twitter"></i> sign in with twitter
                 </button>
             );
 
@@ -22,7 +26,7 @@ class Login extends Component {
         if(loginLoading){
             content = (
                 <div>
-                    <i class="fas fa-spinner"></i>
+                    <i className="fas fa-spinner"></i>
                     <p>Waiting for authentication</p>
                 </div>
             );

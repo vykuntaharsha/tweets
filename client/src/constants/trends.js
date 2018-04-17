@@ -1,0 +1,6 @@
+export const trendsConstants = {
+    REQUEST_TRENDS : 'REQUEST_TRENDS',
+    RECEIVE_TRENDS : 'RECEIVE_TRENDS',
+
+    TRENDS_ERROR : 'TRENDS_ERROR'
+};

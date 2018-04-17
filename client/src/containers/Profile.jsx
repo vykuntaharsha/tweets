@@ -1,5 +1,7 @@
 import React from 'react';
-import TweetList from '../components/TweetList';
+import TweetsList from '../components/TweetsList';
+import ProfileBar from './ProfileBar';
+import {connect} from 'react-redux';
 
 const Profile = ({profile})=> {
 
@@ -10,9 +12,9 @@ const Profile = ({profile})=> {
                 <img src={profile.profileBackground} alt="profile background"/>
             </div>
             <ProfileBar />
-            <Main>
-                <TweetList {profile.tweets}/>
-            </Main>
+            <main>
+                <TweetsList tweets={profile.tweets}/>
+            </main>
         </div>
     );
 };

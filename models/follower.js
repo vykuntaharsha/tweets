@@ -6,12 +6,12 @@ const Schema = mongoose.Schema;
 
 const followerSchema = new Schema({
 
-    followerId : {
+    follower : {
         type : Schema.Types.ObjectId,
         ref : 'User'
     },
 
-    followeeId : {
+    followee : {
         type : Schema.Types.ObjectId,
         ref : 'User'
     },
@@ -27,13 +27,5 @@ followerSchema.plugin(timestamps);
 
 const Follower = mongoose.model('Follower', followerSchema);
 
-Follower.getFollowersOfUser = function( name, callback ){
-    User.getUserByName(name, (err, user)=> {
-        if(err) throw err;
-        Follower.find({followeeId : user._id})
-        .populate('followerId')
-        .exec(callback);
-    });
-}
 
 module.exports = Follower;

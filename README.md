@@ -21,3 +21,31 @@ visit `http://127.0.0.1:3000` not the regular `localhost:3000` in your browser.
 
 * User can login using Twitter authentication.
 * authentication persists across different tabs and for a returning user.
+
+### API
+
+* POST `api/auth/request_token`
+* POST `api/auth/login`
+* POST `api/auth/authenticate`
+* POST `api/auth/logout`
+* GET  `api/users/:username`
+* GET  `api/users/:username/notifications`
+* GET  `api/users/:username/followers`
+* GET  `api/users/:username/follower_requests`
+* GET  `api/users/:username/follow_suggestions`
+* GET  `api/users/:username/following`
+* GET  `api/users/:username/tweets`
+* POST `api/users/:username/tweet`
+* POST `api/users/:username/follow`
+* PUT  `api/users/:username/follow`
+* GET  `api/users?username=[username]`
+* GET  `api/tweets/:id`
+* GET  `api/tweets/:id/replies`
+* POST `api/tweets/:id/reply`
+* POST `api/tweets/:id/like`
+* POST `api/tweets/:id/retweet`
+* DELETE `api/tweets/:id`
+* PUT  `api/tweets/:id`
+* GET  `api/hashtags/trending`
+* GET  `api/hashtags/:id/tweets`
+* GET  `api/hashtags?tag=[hashtag]`

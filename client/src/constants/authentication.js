@@ -6,5 +6,7 @@ export const auth = {
 
     LOGOUT: 'LOGOUT',
 
+    UPDATE_USER: 'UPDATE_USER',
+    
     INVALID_REQUEST : 'INVALID_REQUEST'
 };

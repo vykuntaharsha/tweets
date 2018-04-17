@@ -1,0 +1,181 @@
+body{
+    background-color: #e6ecf0;
+}
+
+.nav-container{
+    border-bottom: 1px solid grey;
+}
+
+.navbar-brand{
+    cursor: pointer;
+}
+
+.nav-item{
+    cursor: pointer;
+}
+
+.navbar-profile-img{
+    cursor: pointer;
+}
+
+.profile-bar{
+    background-color: white;
+    border-radius: 0;
+    border: none;
+}
+
+.profile-background{
+    width: 100%;
+    background-color: #3aa1f2;
+    padding: 20%;
+}
+
+.profile-picture{
+    width: 72px;
+    margin: auto;
+    margin-top: -32px;
+    border-radius: 50%;
+    border: 2px solid snow;
+    display: inline;
+}
+
+.profile-name{
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 25px;
+    cursor: pointer;
+}
+
+.profile-name:hover{
+    text-decoration: underline;
+}
+
+.profile-screen-name{
+    font-size: 14px;
+    color: #657786;
+    cursor: pointer;
+}
+
+.profile-screen-name>span:hover{
+    text-decoration: underline;
+}
+
+.profile-entities{
+    margin-top: 10px;
+    padding: 0px;
+    width: 100%;
+    text-align: center;
+    list-style-type: none;
+}
+.profile-entities > li{
+    text-align: left;
+    margin: auto;
+    padding: 2%;
+    color: #657786;
+    font-weight: bold;
+    font-size: 16px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.profile-entities > li:hover{
+    color: #3aa1f2;
+}
+
+.profile-entities > li>p{
+    color: #3aa1f2;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.fa-check-circle{
+    color: #3aa1f2;
+}
+
+.fa-heart{
+    cursor: pointer;
+    color: #657786;
+}
+.liked{
+    cursor: pointer;
+    color: #E91E63;
+}
+.fa-heart:hover{
+    color: #E91E63;
+}
+
+.fa-share-alt{
+    cursor: pointer;
+    color: #657786;
+}
+
+.fa-share-alt:hover{
+    color: #4CAF50;
+}
+
+.fa-comment-alt{
+    cursor: pointer;
+    color: #657786;
+}
+
+.fa-comment-alt:hover{
+    color: #2196F3;
+}
+
+.post-tweet{
+    background-color: #E8F5FD;
+    border: 1px ridge;
+}
+
+.tweet-area-input{
+    border-radius: 5px;
+    resize: none;
+    background-color: #fff;
+    border-width: 1px;
+    border-style: ridge;
+    border-color: #c0e3f9;
+    box-shadow: 0px 0px 5px #1DA1F2;
+}
+
+.trends-label{
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 0;
+}
+
+.trends-hashtag>a{
+    display: block;
+    color: #3aa1f2;
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+}
+
+.trends-hashtag>span{
+    display: block;
+    font-size: 12px;
+    color: #657786;
+}
+
+.footer{
+
+    padding: 15px;
+    background-color: white;
+    color: #657786;
+    font-size: 12px;
+    border-width: 1px;
+    border-style: ridge;
+}
+
+.footer>span {
+    margin: 0 5px;
+}
+.footer>a{
+    margin: 0 5px;
+    color: #657786;
+    font-size: 12px;
+}
+
+.footer>a:hover{
+    color: #1DA1F2;
+}

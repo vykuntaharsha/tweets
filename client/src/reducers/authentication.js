@@ -29,6 +29,13 @@ export const authentication = (state = {}, action) => {
               isAuthenticated: false,
               user: null
           };
+
+        case auth.UPDATE_USER:
+            return {
+                ...state,
+                user: action.user
+            };
+            
         case auth.INVALID_REQUEST:
             return {
                 ...state,

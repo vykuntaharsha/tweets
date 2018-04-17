@@ -9,11 +9,11 @@ const FollowSuggestions = ({isAuthenticated, suggestions}) => {
             <li key={index} className="suggestions-item">
                 <div>
                     <img className="suggestions-profile-picture"
-                        src={item.profilePicture} alt="profile picture"/>
+                        src={item.profilePicture} alt="profile"/>
                 </div>
                 <div>
                     <a>{item.name}</a>
-                    <span>{item.verified ? <i class="fas fa-badge-check"></i> : ''}</span>
+                    <span>{item.verified ? <i className="fas fa-badge-check"></i> : ''}</span>
                     @<a>{item.screenName}</a>
                     <button className="btn btn-outline-primary">Follow</button>
                 </div>
@@ -34,6 +34,8 @@ const FollowSuggestions = ({isAuthenticated, suggestions}) => {
 
 export default connect(
     (state) => {
-            isAuthenticated : state.authentication.isAuthenticated,
-            suggestions : state.suggestions
-        })(FollowSuggestions);
+        return {
+                isAuthenticated : state.authentication.isAuthenticated,
+                suggestions : state.suggestions
+            };
+    })(FollowSuggestions);
