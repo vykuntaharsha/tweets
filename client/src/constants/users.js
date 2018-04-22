@@ -1,0 +1,9 @@
+export const usersActions={
+    REQUEST_USERS : 'REQUEST_USERS',
+    RECEIVE_USERS : 'RECEIVE_USERS',
+
+    UPDATE_USERS : 'UPDATE_USERS',
+
+    RESET : 'RESET_USERS',
+    ERROR : 'ERROR'
+};

@@ -25,4 +25,30 @@ export const postLike = (tweet)=>{
         }
     })
     .then(res => res.status === 200 ? res.json() : Promise.reject('couldnot post'));
-}
+};
+
+export const fetchTweetsOfUser = (name, page=0, liked=false) =>{
+    const token = localStorage.getItem('sessionToken');
+
+    return fetch(`api/users/${name}/tweets?page=${page}&liked=${liked}`,{
+                method : 'GET',
+                headers : {
+                    'Content-Type' : 'application/json',
+                    Authorization : `Bearer ${token}`
+                },
+            })
+            .then(res => res.status === 200 ? res.json() : Promise.reject('couldnot get'));
+};
+
+export const postToTwitter = (id)=>{
+    const token = localStorage.getItem('sessionToken');
+
+    return fetch(`api/tweets/${id}/share-on-twitter`,{
+                method : 'POST',
+                headers : {
+                    'Content-Type' : 'application/json',
+                    Authorization : `Bearer ${token}`
+                },
+            })
+            .then(res => res.status === 200 ? res.json() : Promise.reject('couldnot post'));
+};

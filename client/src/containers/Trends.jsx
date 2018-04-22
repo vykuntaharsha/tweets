@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {getTrends} from '../actions';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import {formatNumber} from '../util';
+import Spinner from '../components/Spinner';
 
 class Trends extends Component {
 
@@ -27,23 +27,15 @@ class Trends extends Component {
         });
     }
 
-    renderSpin(){
-        return (
-            <div style={{color: '#3aa1f2'}}>
-                <FontAwesomeIcon icon={['fas', 'spinner']} spin/>
-            </div>
-        );
-    }
-
     render(){
         const {hashtags, isFetching} = this.props;
 
         return (
             <div className="row mt-2 ml-2 p-2 bg-white">
-                <p className="trends-label ml-2">
-                    Trends for you
+                <p className="side-label ml-2">
+                    Trending
                 </p>
-                {isFetching ? this.renderSpin() : this.renderHastags(hashtags)}
+                {isFetching ? <Spinner/> : this.renderHastags(hashtags)}
             </div>
         );
     }

@@ -14,6 +14,10 @@ module.exports = (req, res) => {
     const userId = req.auth.id;
     const text = req.body.tweet.text;
 
+    if(!text){
+        return res.status(400).json({message: 'no content provided'});
+    }
+
     User.findById(userId).exec()
         .then( user => {
             if(user){

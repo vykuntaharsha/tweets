@@ -1,24 +1,36 @@
-const Follower = require('../../../models/follower');
+const User = require('../../../models/user');
 
 module.exports = (req, res)=>{
 
+    if(!req.auth){
+        return res.status(401).json({message : 'user is not authenticated'});
+    }
     const followeeName = req.params.name;
-    const followerName = req.params.follower;
+    User.findOne({screenName : followeeName})
+        .exec()
+        .then(followee => {
+            if(!followee){
+                return Promise.reject('not registered');
+            }
 
-    Follower.addFollower( followerName, followeeName, (err, follower)=>{
+            User.findByIdAndUpdate(req.auth.id,{
+                    $push : {followees : followee._id },
+                    $inc : {followingCount : 1}
+                },{
+                    new: true
+                })
+                .exec()
+                .then(user => {
+                    if(!user){
+                        return Promise.reject('couldnot update');
+                    }
+                    return User.findByIdAndUpdate(followee._id, {$inc : {followersCount : 1}}, {new : true})
+                    .exec()
+                    .then(followee => {
+                        res.status(200).json({user})
+                    });
+                })
 
-        if(err){
-            res.status(400).send(err);
-            return;
-        }
-
-        if(!follower.accepted){
-            //send a notification for followee
-        }
-
-        res.status(200).json({
-            requested : true,
-            accepted : follower.accepted
-        });
-    });
+        })
+        .catch(error =>res.status.json(400).json({message : 'cannot follow'}));
 };

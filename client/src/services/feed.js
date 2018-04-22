@@ -1,5 +1,5 @@
-export const fetchFeed = (user, page=0) => {
-    const url = `api/users/${user.screenName}/feed?page=${page}`;
+export const fetchFeed = (name, page=0) => {
+    const url = `api/users/${name}/feed?page=${page}`;
     const token = localStorage.getItem('sessionToken');
 
     return fetch(url, {

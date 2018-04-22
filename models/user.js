@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const timestamps = require('mongoose-timestamp');
-const Follower = require('./follower');
 
 const Schema = mongoose.Schema;
 
@@ -16,14 +15,12 @@ const userSchema = new Schema({
 
     name : {
         type : String,
-        required : true,
-        match : [/^[a-zA-Z0-9 ]+$/, 'user name is invalid']
+        required : true
     },
 
     screenName : {
         type : String,
         required : true,
-        match : [/^[a-zA-Z0-9_]+$/, 'user screen name is invalid'],
         unique : true,
         index : true
     },
@@ -61,19 +58,24 @@ const userSchema = new Schema({
             tokenSecret : String
         },
         select : false
+    },
+
+    followees : {
+        type : [{
+            type : Schema.Types.Object,
+            ref : 'User',
+
+        }],
+        validate : [arrayLimit, '{PATH} exceeds the limit of 999'],
+        select : false
     }
 });
 
 userSchema.plugin(timestamps);
 
-userSchema.post('save', (doc)=>{
-    Follower.create({
-        follower : doc._id,
-        followee : doc._id,
-        accepted : true
-    })
-});
-
+function arrayLimit(val) {
+  return val.length < 1000;
+}
 
 const User = mongoose.model('User', userSchema);
 
@@ -81,16 +83,15 @@ User.getUsers = function (noOfUsers){
     return this.find().limit(noOfUsers).exec();
 };
 
+
 User.createUser = function (token, tokenSecret, profile){
     const background = profile.profile_background_image_url || 'http://abs.twimg.com/images/themes/theme1/bg.png' ;
-
-    const profilePicture = profile.profile_image_url || 'http://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png'
 
     const newUser = {
         twitterId : profile.id_str,
         name : profile.name,
         screenName : profile.screen_name,
-        profilePicture : profilePicture,
+        profilePicture : getProfilePicture(profile.profile_image_url),
         profileBackground : background,
         twitterTokens : {
             token : token,
@@ -101,5 +102,11 @@ User.createUser = function (token, tokenSecret, profile){
     return this.create(newUser);
 };
 
+function getProfilePicture(img) {
+    if(!img) {
+        return 'http://abs.twimg.com/sticky/default_profile_images/default_profile.png';
+    }
 
+    return img.slice(0, -11) +'.png';
+}
 module.exports = User;

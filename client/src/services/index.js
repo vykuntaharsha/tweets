@@ -3,3 +3,4 @@ export * from './feed';
 export * from './user';
 export * from './tweets';
 export * from './trends';
+export * from './comments';

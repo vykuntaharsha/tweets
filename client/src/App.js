@@ -2,6 +2,11 @@ import React from 'react';
 import Login from './containers/Login';
 import Nav from './components/Nav';
 import Home from './containers/Home';
+import {connect} from 'react-redux';
+import Profile from './containers/Profile';
+import {display} from './constants';
+import Alert from './containers/Alert';
+
 import './App.css';
 //font awesome icons
 import fontawesome from '@fortawesome/fontawesome';
@@ -11,28 +16,41 @@ import regular from '@fortawesome/fontawesome-free-regular'
 
 fontawesome.library.add(brands, solid, regular);
 
-// import Profile from './containers/Profile';
-// import FollowSuggestions from './containers/FollowSuggestions';
-//import Trends from './containers/Trends';
 
-const App =  () => {
+const App =  ({isAuthenticated, view}) => {
 
+    if(!isAuthenticated){
+        return <Login />;
+    }
+    const renderContent = ()=>{
+        switch (view) {
+            case display.HOME:
+                return <Home/>;
+            case display.PROFILE:
+                return <Profile/>;
+            default:
+                return <Home/>;
+
+        }
+    }
     return (
         <div>
             <Nav />
+            <Alert/>
             <div className="row">
                 <div className="col-lg-9 col-12 m-auto">
-                    <Login />
-                    <Home />
+                    {renderContent()}
                 </div>
             </div>
-
-            {/* <Trends />
-
-            <Profile />
-            <FollowSuggestions /> */}
         </div>
     );
 };
+const mapStateToProps = (state)=>{
+    const {authentication, display} = state;
+    return {
+        isAuthenticated : authentication.isAuthenticated,
+        view : display
+    };
+}
 
-export default App;
+export default connect(mapStateToProps)(App);

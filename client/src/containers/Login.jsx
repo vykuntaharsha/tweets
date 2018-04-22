@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {login, checkAuthentication} from '../actions/authentication';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 
 class Login extends Component {
 
@@ -16,25 +17,44 @@ class Login extends Component {
         if(!isAuthenticated){
 
             content = (
-                <button className="btn btn-primary"
+                <button className="login-button"
                     onClick={() => dispatch(login())} >
-                    <i className="fab fa-twitter"></i> sign in with twitter
+                    <FontAwesomeIcon icon={['fab', 'twitter']} size="lg"/>
+                     <span> Sign in with Twitter</span>
                 </button>
             );
 
         }
         if(loginLoading){
             content = (
-                <div>
-                    <i className="fas fa-spinner"></i>
-                    <p>Waiting for authentication</p>
+                <div className="login-loading">
+                    <FontAwesomeIcon icon={['fas', 'spinner']} spin/>
+                    <div>Waiting for authentication</div>
                 </div>
             );
         }
 
         return (
-            <div>
-                {content}
+            <div className="login-container">
+                <div className="content-pane">
+                    <ul className="content-details">
+                        <li>
+                            <FontAwesomeIcon icon={['fas', 'search']} size="lg"/>
+                            <span> Follow your interests.</span>
+                        </li>
+                        <li>
+                            <FontAwesomeIcon icon={['fas', 'users']} size="lg"/>
+                            <span> Hear what people are talking about.</span>
+                        </li>
+                        <li>
+                            <FontAwesomeIcon icon={['far', 'comment']} size="lg"/>
+                            <span> Join the conversation.</span>
+                        </li>
+                    </ul>
+                </div>
+                <div className="login-pane">
+                    {content}
+                </div>
             </div>
         );
     }

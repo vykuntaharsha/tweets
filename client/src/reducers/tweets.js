@@ -46,6 +46,13 @@ export const tweets = (state = {
         case tweetsActions.UPDATE_LIKE:
             return handleLike(state, action);
 
+        case tweetsActions.RESET:
+            return {
+                isFetching : false,
+                content : [],
+                page : 0
+            };
+            
         default:
             return state;
 

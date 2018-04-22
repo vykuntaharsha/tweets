@@ -22,6 +22,7 @@ module.exports = (docs, userId, callback) => {
             }
 
             delete tweet.owner.twitterTokens;
+            delete tweet.owner.followees;
             tweets[index]=tweet;
 
             if(done === docs.length){

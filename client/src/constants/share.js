@@ -1,0 +1,8 @@
+export const shareActions = {
+    REQUEST : 'REQUEST_TO_SHARE_ON_TWITTER',
+    RECEIVE_RESPONSE : 'RECEIVE_SHARE_RESPONSE',
+
+    RESET_POPUP : 'RESET_SHARE_URL',
+    
+    ERROR : 'SHARE_ERROR'
+}

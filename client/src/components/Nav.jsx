@@ -1,9 +1,17 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import {displayHome, logout, displayProfile} from '../actions';
+import {display} from '../constants';
+import ReactTooltip from 'react-tooltip';
 
+const Nav = ({isAuthenticated, user, dispatch, view}) => {
 
-const Nav = ({isAuthenticated, user}) => {
+    const activeHome = view === display.HOME ? 'active' : '';
+
+    const renderHome = ()=>{
+        dispatch(displayHome());
+    }
 
     let input;
     if(!isAuthenticated) return '';
@@ -24,21 +32,37 @@ const Nav = ({isAuthenticated, user}) => {
                     id="navbarSupportedContent">
                     <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
                         <li className="nav-item">
-                            <a className="nav-link">
+                            <a className={"nav-link "+activeHome} onClick={renderHome}>
                                 <FontAwesomeIcon icon={['fas', 'home']} size="lg"/>
                                 Home
                             </a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link">
+                            <a
+                                className="nav-link disabled"
+                                data-tip="not implemented"
+                                data-for="notifications"
+                                >
                                 <FontAwesomeIcon icon={['far', 'bell']} size="lg"/>
                                  Notifications
+                                 <ReactTooltip
+                                     id="notifications"
+                                     place="bottom"
+                                 />
                             </a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link">
+                            <a
+                                className="nav-link disabled"
+                                data-tip="not implemented"
+                                data-for="messages"
+                                >
                                 <FontAwesomeIcon icon={['far', 'envelope']} size="lg"/>
                                 Messages
+                                <ReactTooltip
+                                    id="messages"
+                                    place="bottom"
+                                />
                             </a>
                         </li>
                     </ul>
@@ -56,21 +80,47 @@ const Nav = ({isAuthenticated, user}) => {
                         </div>
                     </form>
                     <div className="mr-2 mt-2 mt-lg-0 ">
-                        <img className="rounded-circle navbar-profile-img" src={user.profilePicture} alt="profile"
-                        style={{width : 40 + 'px'}} />
+                        <div className="dropdown">
+                            <img
+                                className="rounded-circle navbar-profile-img dropdown-toggle"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                                src={user.profilePicture} alt="profile"
+                                id="profileDropDown"
+                            style={{width : 40 + 'px'}} />
+                            <div className="dropdown-menu"
+                                 aria-labelledby="profileDropDown"
+                                 >
+                                 <div
+                                     className="dropdown-item"
+                                     onClick={()=>{dispatch(displayProfile(user.screenName))}}
+                                     >
+                                     View profile
+                                 </div>
+                                  <div className="dropdown-divider"></div>
+                                  <div
+                                      className="dropdown-item"
+                                      onClick={()=>{dispatch(logout())}}
+                                      >
+                                      Logout
+                                  </div>
+                            </div>
+                        </div>
                     </div>
-                    <button className="btn btn-primary mt-2 mt-lg-0">Tweet</button>
                 </div>
             </nav>
         </div>
     );
 };
 
-export default connect(
-    (state)=>{
-        return {
-            isAuthenticated : state.authentication.isAuthenticated,
-            user : state.authentication.user
-        };
-    }
-)(Nav);
+const mapStateToProps = (state) =>{
+    const {authentication, display} = state
+    return {
+        isAuthenticated : authentication.isAuthenticated,
+        user : authentication.user,
+        view : display
+    };
+};
+
+export default connect(mapStateToProps)(Nav);

@@ -4,20 +4,19 @@ import * as services from '../services/authentication';
 export const login = () => dispatch => {
     dispatch({type : auth.LOGIN_REQUEST});
 
-    return services.requetTokenForTwitter()
+    return services.requestTokenForTwitter()
         .then( tokenData => Promise.resolve(tokenData.oauth_token))
         .then( oAuthToken => {
             signInOnTwitter(oAuthToken, (oAuthData, error) => {
                 if( error || !oAuthData ) return dispatch({ type : auth.LOGIN_FAILURE });
+
 
                 services.login(oAuthData.oAuthVerifier, oAuthData.oAuthToken)
                 .then( data => {
                     localStorage.setItem('sessionToken', data.token);
                     dispatch({ type : auth.LOGIN_SUCCESS, user : data.user });
                 })
-                .catch( error => {
-                    dispatch({ type : auth.LOGIN_FAILURE });
-                });
+                .catch( error =>dispatch({ type : auth.LOGIN_FAILURE }));
             });
         });
 
@@ -28,6 +27,7 @@ export const logout = () => dispatch => {
     return services.logout()
         .then(status => {
             if(status){
+                localStorage.removeItem('sessionToken');
                 dispatch({ type : auth.LOGOUT });
             }
         })
