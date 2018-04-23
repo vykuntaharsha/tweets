@@ -22,7 +22,7 @@ export const getTweets = () => (dispatch, getState) => {
 
     return fetchFeed(user.screenName, page)
                 .then(tweets => dispatch({type: tweetsActions.RECEIVE_TWEETS, tweets, page}))
-                //.catch(error => dispatch({type: tweetsActions.ERROR}));
+                .catch(error => dispatch({type: tweetsActions.ERROR}));
 
 };
 

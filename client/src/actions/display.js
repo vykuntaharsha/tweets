@@ -8,10 +8,12 @@ import {
 import {fetchUser} from '../services';
 import {getTweetsOfProfile} from './tweets';
 
-export const displayHome = () =>(dispatch)=>{
+export const displayHome = () =>(dispatch, getState)=>{
+    const {user} = getState().authentication;
     dispatch({type : display.HOME});
     dispatch({type : tweetsActions.RESET});
     dispatch({type : profileActions.RESET_DISPLAY});
+    dispatch({type : profileActions.UPDATE_PROFILE, user })
 };
 
 export const displayProfile = (name) => (dispatch, getState) =>{
