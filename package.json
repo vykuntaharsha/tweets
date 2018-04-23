@@ -5,9 +5,9 @@
   "main": "app-server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "client": "cd client && npm install && npm start",
+    "client": "cd client && npm install && npm run build",
     "server": "node src/app-server.js",
-    "start": "concurrently \"npm run server\" \"npm run client\" "
+    "start": "concurrently \"npm run client\" \"npm run server\" "
   },
   "repository": {
     "type": "git",

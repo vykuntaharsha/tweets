@@ -1,7 +1,7 @@
 const express = require('express');
 require('env2')('.env');
 const bodyParser = require('body-parser');
-const staticFiles = express.static('../client/build');
+const staticFiles = express.static('client/build');
 const mongoose = require('mongoose');
 const api = require('./api');
 
@@ -24,6 +24,7 @@ app.use( bodyParser.urlencoded({extended: true}) );
 app.use( bodyParser.json({extended : true}) );
 
 app.use('/api', api);
+app.use('/*', staticFiles);
 
 app.use(function(err, req, res, next) {
     if(err.name === 'UnauthorizedError') {
@@ -34,6 +35,7 @@ app.use(function(err, req, res, next) {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server listening at http://localhost:${PORT}`);
+  console.log(`Server listening at http://127.0.0.1:${PORT}`);
+  console.log('wait for the react build to finish');
   console.log('use Ctrl-C to stop this server');
 });

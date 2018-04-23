@@ -9,6 +9,7 @@ Tweets is a single page application that allow you to tweet your thoughts, ideas
 Clone this repository into your local machine.
 
 Change the `src/config.js` file with your credentials.  
+Make sure to set the callback url in  twitter apps correct or leave it blank.  
 
 ```
 cd to_project_directory
@@ -18,7 +19,7 @@ npm start
 
 
 Wait for the client dependencies to be installed and
-visit `http://127.0.0.1:3000` not the regular `localhost:3000` in your browser.
+visit `http://127.0.0.1:5000` not the regular `localhost:5000` in your browser.
 
 
 ## Functionality
@@ -69,8 +70,8 @@ visit `http://127.0.0.1:3000` not the regular `localhost:3000` in your browser.
 * User can create, like, comment , share on twitter and delete any tweet.
 
 #### Liking
-
-* User can like any tweet the see.
+* User should be logged in to like.
+* User can like any tweet they see.
 
 #### Commenting
 
@@ -79,7 +80,7 @@ visit `http://127.0.0.1:3000` not the regular `localhost:3000` in your browser.
 * User can reply to comments.
 
 #### Sharing
-
+* User should be logged in to share on their twitter.
 * User can share any tweet they see.
 
 
