@@ -1,0 +1,417 @@
+body{
+    background-color: #e6ecf0;
+    overflow-x: hidden;
+}
+
+.login-container{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+.content-pane{
+    display: inline-block;
+    height: 100%;
+    width: 50%;
+    background-color: #3aa1f2;
+    vertical-align: top;
+}
+
+.content-details{
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    margin-top: 40%;
+    word-spacing: 4px;
+    letter-spacing: 1px;
+    list-style-type: none;
+    margin-left: 10%;
+}
+
+.content-details>li{
+    margin: 10% 0;
+}
+
+.login-pane{
+    display: inline-block;
+    height: 100%;
+    width: 50%;
+    background-color: white;
+    text-align: center;
+    vertical-align: top;
+
+}
+
+.login-loading{
+    margin-top: 50%;
+    color: #3aa1f2;
+    font-family: 'Roboto', sans-serif;
+    letter-spacing: 2.5px;
+    font-size: 20px;
+}
+
+.login-button{
+    margin-top: 50%;
+    background-color: #3aa1f2;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 15px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    font-family: 'Roboto', sans-serif;
+    transition: all 0.3s ease 0s;
+    outline: none;
+    letter-spacing: 2.5px;
+}
+
+.login-button:hover{
+    background-color: #2196F3;
+    box-shadow: 0px 15px 20px rgba(3, 169, 244, 0.61);
+    color: #fff;
+    transform: translateY(-7px);
+}
+
+.nav-container{
+    border-bottom: 1px solid grey;
+}
+
+.navbar-brand{
+    cursor: pointer;
+}
+.nav-link:hover{
+    border-bottom: 1px solid;
+}
+.nav-item{
+    cursor: pointer;
+}
+
+.navbar-profile-img{
+    cursor: pointer;
+}
+
+.nav-tabs{
+    border: none;
+}
+
+.dropdown-item:hover{
+    background-color: #3aa1f2;
+    cursor: pointer;
+    color : white;
+}
+
+.profile-nav-background{
+    width: 100%;
+    height: 150px;
+}
+
+.profile-bar{
+    background-color: white;
+    border-radius: 0;
+    border: none;
+}
+
+.profile-tags{
+    display: inline-block;
+    overflow-x: hidden;
+    white-space: nowrap;
+}
+
+.follow-btn{
+    border-radius: 15px;
+    padding: 1px 10px;
+}
+
+.user-img{
+    width: 60px;
+}
+
+.profile-img{
+    width: 42px;
+    height: 42px;
+    cursor: pointer;
+}
+
+.tweets-tooltip{
+    font-size: 12px;
+    font-weight: lighter;
+    padding: 5px 5px;
+}
+
+.profile-background{
+    width: 100%;
+    background-color: #3aa1f2;
+    padding: 20%;
+}
+
+.profile-picture{
+    width: 72px;
+    height: 72px;
+    margin: auto;
+    margin-top: -32px;
+    border-radius: 50%;
+    border: 2px solid snow;
+    display: inline;
+}
+
+.profile-name{
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 25px;
+    cursor: pointer;
+}
+
+.profile-name:hover{
+    text-decoration: underline;
+}
+
+.profile-screen-name{
+    font-size: 14px;
+    color: #657786;
+    cursor: pointer;
+}
+
+.profile-screen-name>span:hover{
+    text-decoration: underline;
+}
+
+.profile-entities{
+    margin-top: 10px;
+    padding: 0px;
+    width: 100%;
+    text-align: center;
+    list-style-type: none;
+}
+.profile-entities > li{
+    text-align: left;
+    margin: auto;
+    padding: 2%;
+    color: #657786;
+    font-weight: bold;
+    font-size: 16px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.profile-entities > li:hover{
+    color: #3aa1f2;
+}
+
+.profile-entities > li>p{
+    color: #3aa1f2;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.fa-check-circle{
+    color: #3aa1f2;
+}
+
+.fa-heart{
+    cursor: pointer;
+    color: #657786;
+}
+.liked{
+    cursor: pointer;
+    color: #E91E63;
+}
+.fa-heart:hover{
+    color: #E91E63;
+}
+
+.fa-share-alt{
+    cursor: pointer;
+    color: #657786;
+}
+
+.fa-share-alt:hover{
+    color: #4CAF50;
+}
+
+.fa-comment-alt{
+    cursor: pointer;
+    color: #657786;
+}
+
+.fa-comment-alt:hover{
+    color: #2196F3;
+}
+
+.post-tweet{
+    background-color: #E8F5FD;
+    border-width: 1px;
+}
+
+.view-more{
+    color: #007bff;
+    font-size: 12px;
+}
+
+.view-more:hover{
+    border-bottom: 1px solid #3aa1f2;
+    cursor: pointer;
+}
+
+.items{
+    border-bottom: 1px solid #657786;
+}
+
+.item-name{
+    font-size: 18px;
+}
+
+.item-screen-name{
+    font-size: 12px;
+}
+
+.tweet-area-input{
+    border-radius: 5px;
+    resize: none;
+    background-color: #fff;
+    border-width: 1px;
+    border-color: #c0e3f9;
+    box-shadow: 0px 0px 5px #1DA1F2;
+}
+
+.side-label{
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 0;
+}
+
+.trends-hashtag>.hashtag{
+    cursor: pointer;
+    display: block;
+    color: #3aa1f2;
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+}
+
+.hashtag{
+    color: #3aa1f2;
+    cursor: pointer;
+}
+.hashtag:hover{
+    text-decoration: underline;
+}
+
+.trends-hashtag>span{
+    display: block;
+    font-size: 12px;
+    color: #657786;
+}
+
+.comment-list{
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.comment-container{
+    margin: 15px 0;
+    font-size: 14px;
+}
+
+.comment{
+    background-color: white;
+    border-radius: 15px;
+    padding: 10px;
+    margin-left: 15px;
+    margin-bottom: 5px;
+}
+
+.comment-input{
+    font-size: 14px;
+    width: 90%;
+    margin-left: 15px;
+    border-radius: 15px;
+    padding: 4px 15px;
+    border: 1px solid #d4d9de;
+
+}
+.comment-profile-img{
+    border-radius: 50%;
+    width: 28px;
+}
+
+.comment-profile-name{
+    font-weight: bold;
+    margin: 0 5px;
+    cursor: pointer;
+    color: #047fe0;
+}
+
+.comment-profile-name:hover{
+    text-decoration: underline;
+}
+
+.replies-pane{
+    margin-left: 15px;
+    width: 100%;
+}
+
+.replies-profile-img{
+    border-radius: 50%;
+    width: 20px;
+}
+
+.reply-input{
+    font-size: 14px;
+    width: 90%;
+    margin-left: 15px;
+    border-radius: 15px;
+    padding: 4px 15px;
+    border: 1px solid #d4d9de;
+}
+
+.comment-options-holder{
+    margin-top: 5px;
+}
+
+.comment-options{
+    font-size: 12px;
+    cursor: pointer;
+    margin-left: 50px;
+    padding-top: 5px;
+    color: #018efd;
+}
+
+.view-more-comments{
+    font-size: 12px;
+    cursor: pointer;
+    margin-left: 10px;
+    padding: 0;
+    color: #018efd;
+}
+
+.comment-options:hover{
+    text-decoration: underline;
+}
+
+.view-more-comments:hover{
+    text-decoration: underline;
+}
+.footer{
+
+    padding: 15px;
+    background-color: white;
+    color: #657786;
+    font-size: 12px;
+    border-width: 1px;
+}
+
+.footer>span {
+    margin: 0 5px;
+}
+.footer>a{
+    margin: 0 5px;
+    color: #657786;
+    font-size: 12px;
+}
+
+.footer>a:hover{
+    color: #1DA1F2;
+}

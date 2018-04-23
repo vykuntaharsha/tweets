@@ -1,6 +1,6 @@
 {
   "name": "tweets",
-  "version": "0.0.0",
+  "version": "0.3.0",
   "description": "Organize and have a personalised experience of tweets from you and users that you follow on twitter.",
   "main": "app-server.js",
   "scripts": {

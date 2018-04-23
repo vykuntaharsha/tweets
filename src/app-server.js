@@ -10,7 +10,14 @@ const PORT = process.env.PORT || 5000;
 
 app.set('json spaces', 2);
 app.use(staticFiles);
-mongoose.connect('mongodb://localhost/tweets');
+const config = require('./config');
+try {
+    const mongodbURI = `mongodb://${config.mongodbUser}:${config.mongodbPassword}@ds141088.mlab.com:41088/heroku_9f4l79f2`
+    mongoose.connect(mongodbURI);
+} catch (e) {
+    mongoose.connect('mongodb://localhost/tweets');
+}
+
 mongoose.Promise = global.Promise;
 
 app.use( bodyParser.urlencoded({extended: true}) );

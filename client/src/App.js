@@ -1,38 +1,59 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Login from './containers/Login';
+import Nav from './components/Nav';
+import Home from './containers/Home';
 import {connect} from 'react-redux';
-import {checkAuthentication} from './actions/authentication'
+import Profile from './containers/Profile';
+import HashtagView from './containers/HashtagView';
+import {display} from './constants';
+import Alert from './containers/Alert';
 
-class App extends Component {
+import './App.css';
+//font awesome icons
+import fontawesome from '@fortawesome/fontawesome';
+import brands from '@fortawesome/fontawesome-free-brands'
+import solid from '@fortawesome/fontawesome-free-solid'
+import regular from '@fortawesome/fontawesome-free-regular'
 
-    componentDidMount(){
-        this.props.dispatch(checkAuthentication());
+fontawesome.library.add(brands, solid, regular);
+
+
+const App =  ({isAuthenticated, view}) => {
+
+    if(!isAuthenticated){
+        return <Login />;
     }
+    const renderContent = ()=>{
+        switch (view) {
+            case display.HOME:
+                return <Home/>;
+            case display.PROFILE:
+                return <Profile/>;
+            case display.HASHTAGS:
+                return <HashtagView/>;
+            default:
+                return <Home/>;
 
-    render() {
-        let content = '';
-
-        const {isAuthenticated, user} = this.props;
-
-        if(isAuthenticated){
-            content = (<p>{user.name}</p>);
         }
-
-        return (
-            <div>
-                <Login />
-                {content}
-            </div>
-        );
     }
-}
-const mapStateToProps = state => {
-  const { authentication } = state
-
-  return {
-    isAuthenticated : authentication.isAuthenticated,
-    user : authentication.user
-  }
+    return (
+        <div>
+            <Nav />
+            <Alert/>
+            <div className="row">
+                <div className="col-lg-9 col-12 m-auto">
+                    {renderContent()}
+                </div>
+            </div>
+        </div>
+    );
+};
+const mapStateToProps = (state)=>{
+    const {authentication, display} = state;
+    return {
+        isAuthenticated : authentication.isAuthenticated,
+        view : display
+    };
 }
 
 export default connect(mapStateToProps)(App);

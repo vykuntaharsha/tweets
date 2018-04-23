@@ -1,14 +1,28 @@
 const router = require('express').Router();
-const getUserByName = require('./get-user-by-name');
-const createUser = require('./create-user');
 const getUsers = require('./obtain-users');
+const getUserByName = require('./get-user-by-name');
+const getFeed = require('./obtain-feed');
 const getFollowers = require('./obtain-followers');
-const followUser = require('./follow-user');
+const getFollwees = require('./obtain-followees');
+const follow = require('./follow-user');
+const getTweets = require('./obtain-tweets');
+const getLikedTweets = require('./obtain-liked-tweets');
+const getPopularUsers = require('./popular-users');
+const followeeSuggestions = require('./followee-suggestions');
+const unfollow = require('./unfollow-user');
+const verifyJWT = require('../auth/verify-jwt');
+
 
 router.get('/', getUsers);
-router.get('/:name', getUserByName);
-router.get('/:name/followers', getFollowers);
-router.post('/:name/follower/:follower', followUser);
-router.post('/user', createUser);
+router.get('/popular_users', [verifyJWT, getPopularUsers]);
+router.get('/user/:name', [verifyJWT,getUserByName]);
+router.get('/:name/feed', [verifyJWT, getFeed]);
+router.get('/:name/followers', [verifyJWT, getFollowers]);
+router.get('/:name/followee_suggestions', [verifyJWT, followeeSuggestions]);
+router.get('/:name/following', [verifyJWT, getFollwees]);
+router.get('/:name/tweets', [verifyJWT, getTweets, getLikedTweets]);
+router.post('/:name/follow', [verifyJWT,follow]);
+router.post('/:name/unfollow', [verifyJWT, unfollow]);
+
 
 module.exports = router;

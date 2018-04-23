@@ -1,18 +1,22 @@
 const User = require('../../../models/user');
+const createJWT = require('./create-jwt');
 
 module.exports = (req, res) => {
 
-    if(!req.user || !req.token){
-        return res.status(500).send('Something is not right');
-    }
-
-    User.addSessionToken(req.user._id, req.token, (error, result)=>{
-        if(error) {
-            return res.status(500).send('Something is not right');;
+    User.findOne({twitterId : req.profile.id_str}).exec()
+    .then(user => {
+        if(!user){
+            return User.createUser(req.body.accessToken, req.body.accessTokenSecret, req.profile)
+            .then(newUser => {
+                const token = createJWT(newUser);
+                res.status(200).json({user: newUser,token});
+            })
+            .catch(error => res.status(400).json({message : 'couldnot create user'}));
+        }else {
+            const token = createJWT(user);
+            res.status(200).json({user,token});
         }
-        return res.status(200).json({
-            user : req.user,
-            token : req.token
-        });
-    });
+    })
+    .catch(error => res.status(500).send('Something is not right'));
+
 };

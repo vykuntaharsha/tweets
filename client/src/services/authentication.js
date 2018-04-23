@@ -12,7 +12,6 @@ export const login = (oAuthVerifier, oAuthToken) => {
 
 export const logout = () => {
     const token = localStorage.getItem('sessionToken');
-    localStorage.removeItem('sessionToken');
     return fetch('api/auth/logout', {
         method : 'POST',
         headers : {
@@ -40,7 +39,7 @@ export const checkAuthentication = () => {
     });
 };
 
-export const requetTokenForTwitter = () => {
+export const requestTokenForTwitter = () => {
     return fetch('api/auth/request_token', {
         method : 'POST'
     })
