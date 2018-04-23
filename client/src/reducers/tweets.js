@@ -4,7 +4,8 @@ import {tweetsActions} from '../constants';
 export const tweets = (state = {
     isFetching : false,
     content : [],
-    page : 0
+    page : 0,
+    hasMore : true
 }, action) => {
     const previousTweets =  state.content || [];
 
@@ -20,7 +21,7 @@ export const tweets = (state = {
             return {
                 ...state,
                 isFetching : false,
-                content : [...previousTweets, ...action.tweets],
+                content : getContent(previousTweets, action.tweets),
                 page : action.page + 1,
                 hasMore : action.tweets.length !== 0
             };
@@ -41,7 +42,7 @@ export const tweets = (state = {
             return {
                 ...state,
                 isFetching : false,
-                content  : [action.tweet, ...previousTweets]
+                content  : getContent(previousTweets, [action.tweet], true)
             };
         case tweetsActions.UPDATE_LIKE:
             return handleLike(state, action);
@@ -50,9 +51,12 @@ export const tweets = (state = {
             return {
                 isFetching : false,
                 content : [],
-                page : 0
+                page : 0,
+                hasMore : true
             };
-            
+        case tweetsActions.DELETE_TWEET:
+
+            return getDeleteState(state, action);
         default:
             return state;
 
@@ -60,6 +64,15 @@ export const tweets = (state = {
 
 };
 
+function getContent( prev, next, front=false) {
+    const nextIds = next.map(item => item._id);
+
+    const previous = prev.filter(item => !nextIds.includes(item._id))
+    if(front){
+        return [...next, ...previous];
+    }
+    return [...previous, ...next];
+}
 
 function handleLike(state, action){
     const tweets = state.content;
@@ -73,5 +86,16 @@ function handleLike(state, action){
     return {
         ...state,
         content
+    };
+}
+
+function getDeleteState(state, action) {
+    const tweets = state.content;
+
+    const content = tweets.filter(item => item._id !==action.tweetId);
+
+    return {
+        ...state,
+        content : [...content]
     };
 }

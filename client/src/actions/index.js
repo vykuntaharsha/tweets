@@ -8,3 +8,4 @@ export * from './followee-suggestions';
 export * from './follow';
 export * from './share';
 export * from './users';
+export * from './hashtags';

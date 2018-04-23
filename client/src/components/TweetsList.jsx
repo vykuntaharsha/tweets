@@ -3,6 +3,7 @@ import Tweet from './Tweet';
 import {likeTweet, displayProfile, shareOnTwitter} from '../actions';
 import InfiniteScroll from 'react-infinite-scroller';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import Spinner from './Spinner';
 
 class TweetsList extends Component {
 
@@ -43,11 +44,13 @@ class TweetsList extends Component {
         const tweetItems = this.props.tweets.map( (item) => {
             return (
                 <Tweet
+                    currentUser={this.props.currentUser}
                     key={item._id}
                     tweet={item}
                     like={()=>{ this.handleLike(item) }}
                     profile={()=>{this.handleProfile(item)}}
                     share={()=>{this.handleShare(item)}}
+                    dispatch={this.props.dispatch}
                 />);
         });
 
@@ -56,7 +59,7 @@ class TweetsList extends Component {
                 pageStart={0}
                 loadMore={this.loadMoreTweets}
                 hasMore={!!this.props.hasMore}
-                loader={<div className="loader" key={0}>Loading ...</div>}
+                loader={<div className="text-center col-12 mx-2" key={0}><Spinner/></div>}
                 >
                 {tweetItems}
             </InfiniteScroll>

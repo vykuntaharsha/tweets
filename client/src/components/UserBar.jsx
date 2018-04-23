@@ -11,7 +11,7 @@ const UserBar = ({user, dispatch})=>{
                     className="profile-img rounded-circle float-left"
                     src={user.profilePicture}
                     alt="profile"
-                    style={{width : 36+'px'}}
+                    style={{width : 36+'px', height : 36+'px'}}
                 />
             </div>
             <div className="profile-tags col-10 ml-auto pt-1">

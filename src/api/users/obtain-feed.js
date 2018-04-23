@@ -11,7 +11,6 @@ module.exports = (req, res)=> {
 
     const perPage = parseInt(req.query.limit) || 10;
     const pageNo = parseInt(req.query.page) || 0;
-
     User.findById(req.auth.id)
         .select('followees screenName')
         .lean().exec()

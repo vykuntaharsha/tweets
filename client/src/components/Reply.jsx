@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-
+import {displayProfile} from '../actions';
 
 class Reply extends Component {
 
 
     render(){
-        const {comment} = this.props;
+        const {comment, dispatch} = this.props;
 
         return(
             <div className="comment-container">
@@ -17,7 +17,8 @@ class Reply extends Component {
                         alt="profile"
                     />
                     <a className="comment">
-                        <span className="comment-profile-name">
+                        <span className="comment-profile-name"
+                            onClick={()=>{dispatch(displayProfile(comment.owner.screenName))}}>
                             {comment.owner.name}
                         </span>
 

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {getTrends} from '../actions';
+import {getTrends, displayHashtags} from '../actions';
 import {formatNumber} from '../util';
 import Spinner from '../components/Spinner';
 
@@ -16,11 +16,14 @@ class Trends extends Component {
 
     renderHastags(hashtags){
         return hashtags.map( (item, index) => {
+            const setHashtag = ()=>{
+                this.props.dispatch(displayHashtags(item.hashtag));
+            }
             return (
                 <div className="col-12 mt-2 trends-hashtag" key={index}>
-                    <a href="">
+                    <span onClick={setHashtag} className="hashtag">
                         #{item.hashtag}
-                    </a>
+                    </span>
                     <span>{formatNumber(item.noOfTweets)}Tweets</span>
                 </div>
             );

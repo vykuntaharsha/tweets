@@ -3,7 +3,9 @@ import {
     displayProfileTweets,
     displayProfileFollowing,
     displayProfileFollowers,
-    displayProfileLikedTweets
+    displayProfileLikedTweets,
+    followUser,
+    unfollowUser,
 } from '../actions';
 
 import {profileActions} from '../constants';
@@ -32,6 +34,28 @@ const ProfileNav = ({user, dispatch, view})=>{
             break;
 
     }
+
+    const renderFollowButton = () => {
+        if(user.isFollowingByUser === null){
+            return '';
+        }
+
+        if(!user.isFollowingByUser){
+            return (
+                <button className="btn btn-outline-primary follow-btn ml-auto"
+                    onClick={()=>{dispatch(followUser(user.screenName, true))}}>
+                    Follow
+                </button>
+            );
+        }
+
+        return (
+            <button className="btn btn-primary follow-btn ml-auto"
+                onClick={()=>{dispatch(unfollowUser(user.screenName, true))}}>
+                Unfollow
+            </button>
+        );
+    };
 
     return (
         <div className="row ml-2 mr-2">
@@ -75,9 +99,9 @@ const ProfileNav = ({user, dispatch, view})=>{
                                 Likes
                             </a>
                          </li>
-                         <button className="ml-auto btn btn-outline-secondary">
-                             Edit
-                         </button>
+
+                         {renderFollowButton()}
+
                     </ul>
 
                 </div>

@@ -14,7 +14,7 @@ module.exports = (req, res)=>{
             }
 
             User.findByIdAndUpdate(req.auth.id,{
-                    $push : {followees : followee._id },
+                    $addToSet : {followees : followee._id },
                     $inc : {followingCount : 1}
                 },{
                     new: true
@@ -27,6 +27,7 @@ module.exports = (req, res)=>{
                     return User.findByIdAndUpdate(followee._id, {$inc : {followersCount : 1}}, {new : true})
                     .exec()
                     .then(followee => {
+                        user.isFollowingByUser = true;
                         res.status(200).json({user})
                     });
                 })

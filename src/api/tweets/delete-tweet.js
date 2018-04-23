@@ -1,6 +1,7 @@
 const Tweet = require('../../../models/tweet');
 const Comment = require('../../../models/comment');
 const User = require('../../../models/user');
+const Activity = require('../../../models/activity');
 
 module.exports = (req, res) => {
     if(!req.auth){
@@ -18,10 +19,16 @@ module.exports = (req, res) => {
             return Promise.resolve(doc);
         })
         .then(doc => {
-            User.findByIdAndUpdate(doc.owner, {$inc : {tweetsCount : -1}});
-            return Comment.deleteMany({tweet : doc._id}).exec();
+            Activity.deleteMany({tweet : tweetId}).exec();
+            Comment.deleteMany({tweet : tweetId}).exec();
+            User.findByIdAndUpdate(userId, {$inc : {tweetsCount : -1}}, {new : true}, (err, result)=>{
+                if(err || !result){
+                    return res.status(400).json({message : 'cannot update user'})
+                }
+
+                return res.status(200).json({user : result});
+            });
         })
-        .then( () => res.sendStatus(200))
         .catch(error => res.status(400).json({message: "can't delete tweet"}));
 
 };

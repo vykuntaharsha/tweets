@@ -1,5 +1,5 @@
 import React from 'react';
-import {displayProfile} from '../actions';
+import {displayProfile, followUser, unfollowUser} from '../actions';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 
 const User = ({user, dispatch}) => {
@@ -16,14 +16,20 @@ const User = ({user, dispatch}) => {
 
         if(!user.isFollowingByUser){
             return (
-                <button className="btn btn-outline-primary follow-btn mt-2">
+                <button
+                    className="btn btn-outline-primary follow-btn mt-2"
+                    onClick={()=>{dispatch(followUser(user.screenName))}}
+                    >
                     Follow
                 </button>
             );
         }
 
         return (
-            <button className="btn btn-primary follow-btn mt-2">
+            <button
+                className="btn btn-primary follow-btn mt-2"
+                onClick={()=>{dispatch(unfollowUser(user.screenName))}}
+                >
                 Unfollow
             </button>
         );

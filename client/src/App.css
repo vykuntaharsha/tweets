@@ -128,6 +128,8 @@ body{
 }
 
 .profile-img{
+    width: 42px;
+    height: 42px;
     cursor: pointer;
 }
 
@@ -145,6 +147,7 @@ body{
 
 .profile-picture{
     width: 72px;
+    height: 72px;
     margin: auto;
     margin-top: -32px;
     border-radius: 50%;
@@ -277,12 +280,21 @@ body{
     margin-bottom: 0;
 }
 
-.trends-hashtag>a{
+.trends-hashtag>.hashtag{
+    cursor: pointer;
     display: block;
     color: #3aa1f2;
     font-size: 16px;
     margin: 0;
     padding: 0;
+}
+
+.hashtag{
+    color: #3aa1f2;
+    cursor: pointer;
+}
+.hashtag:hover{
+    text-decoration: underline;
 }
 
 .trends-hashtag>span{

@@ -4,6 +4,7 @@ import Nav from './components/Nav';
 import Home from './containers/Home';
 import {connect} from 'react-redux';
 import Profile from './containers/Profile';
+import HashtagView from './containers/HashtagView';
 import {display} from './constants';
 import Alert from './containers/Alert';
 
@@ -28,6 +29,8 @@ const App =  ({isAuthenticated, view}) => {
                 return <Home/>;
             case display.PROFILE:
                 return <Profile/>;
+            case display.HASHTAGS:
+                return <HashtagView/>;
             default:
                 return <Home/>;
 

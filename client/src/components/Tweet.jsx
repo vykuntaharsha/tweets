@@ -3,6 +3,8 @@ import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import {getTimeElapsed} from '../util/time';
 import ReactTooltip from 'react-tooltip';
 import CommentsPane from '../containers/CommentsPane';
+import TweetText from './TweetText';
+import {deleteTweet} from '../actions';
 
 class Tweet extends Component {
     constructor(props) {
@@ -28,13 +30,49 @@ class Tweet extends Component {
 
     renderComments(){
         if(this.state.clickedComment){
-            return <CommentsPane tweet={this.props.tweet}/>
+            return <CommentsPane
+                tweet={this.props.tweet}
+                dispatch={this.props.dispatch}/>
+        }
+        return '';
+    }
+
+
+    renderEditButton(){
+        const {tweet, currentUser, dispatch} = this.props;
+        if(tweet.owner._id === currentUser._id){
+            return (
+                <span
+                    className="dropleft ml-auto"
+                    style={{cursor : 'pointer'}}
+                    >
+                    <span
+                        className="text-secondary"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                        >
+                        <FontAwesomeIcon icon={['fas', 'ellipsis-v']} size='xs'/>
+                    </span>
+                    <div className="dropdown-menu"
+                         aria-labelledby={'edit'+tweet._id}
+                         >
+                         <div
+                             className="dropdown-item"
+                             onClick={()=>{dispatch(deleteTweet(tweet._id))}}
+                             >
+                             Delete
+                         </div>
+
+                    </div>
+                </span>
+            );
         }
         return '';
     }
 
     render(){
-        const {tweet, like, profile, share} = this.props;
+        const {tweet, like, profile, share, dispatch} = this.props;
 
         const displayLike = ()=>{
             if(tweet.isLikedByUser){
@@ -54,15 +92,25 @@ class Tweet extends Component {
                             />
                         </div>
                         <div className="col-lg-11 col-10">
-                            <a onClick={profile}>
-                                <span className="profile-name">{tweet.owner.name}</span>
-                                {tweet.owner.verified ? <FontAwesomeIcon icon={['fas', 'check-circle']}/> : ''}
-                                <span className="profile-screen-name">@{tweet.owner.screenName}</span>
-                            </a>
-                            <small className="ml-1">
-                                .{getTimeElapsed(tweet.updatedAt)}
-                            </small>
-                            <p>{tweet.text}</p>
+                            <div className="row ml-auto">
+                                <a onClick={profile}>
+                                    <span className="profile-name">{tweet.owner.name}</span>
+                                    {tweet.owner.verified ? <FontAwesomeIcon icon={['fas', 'check-circle']}/> : ''}
+                                    <span className="profile-screen-name">@{tweet.owner.screenName}</span>
+                                </a>
+                                <small className="ml-1 text-secondary">
+                                    .{getTimeElapsed(tweet.updatedAt)}
+                                </small>
+                                {this.renderEditButton()}
+                            </div>
+                            <p>
+                                <TweetText
+                                    text={tweet.text}
+                                    hashtags={tweet.hashtags}
+                                    userMentions={tweet.userMentions}
+                                    dispatch={dispatch}
+                                />
+                            </p>
                             <div>
                                 {tweet.image ? <img src={tweet.image} alt="tweet media"/> : ''}
                             </div>

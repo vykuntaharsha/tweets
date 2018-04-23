@@ -25,6 +25,9 @@ export const users = (state ={
                 hasMore : action.users.length !== 0
             };
 
+        case usersActions.UPDATE_FOLLOW:
+            return handleFollow(state, action);
+
         case usersActions.ERROR:
 
             return{
@@ -38,9 +41,24 @@ export const users = (state ={
                 content : [],
                 page : 0
             };
-        
+
         default:
             return state;
     }
 
 };
+
+function handleFollow(state, action){
+    const users = state.content;
+    const content = users.map(user => {
+        if(user._id === action.user._id){
+            return action.user;
+        }
+        return user;
+    });
+
+    return {
+        ...state,
+        content
+    };
+}

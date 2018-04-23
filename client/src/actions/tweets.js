@@ -1,4 +1,4 @@
-import { tweetsActions } from '../constants';
+import { tweetsActions, display, profileActions } from '../constants';
 import { auth } from '../constants';
 
 import {
@@ -6,7 +6,8 @@ import {
     postTweetToServer,
     fetchUser,
     postLike,
-    fetchTweetsOfUser
+    fetchTweetsOfUser,
+    postDeleteTweet
 } from '../services';
 
 export const getTweets = () => (dispatch, getState) => {
@@ -21,7 +22,7 @@ export const getTweets = () => (dispatch, getState) => {
 
     return fetchFeed(user.screenName, page)
                 .then(tweets => dispatch({type: tweetsActions.RECEIVE_TWEETS, tweets, page}))
-                .catch(error => dispatch({type: tweetsActions.ERROR}));
+                //.catch(error => dispatch({type: tweetsActions.ERROR}));
 
 };
 
@@ -65,4 +66,20 @@ export const resetTweets = () => ({
 
 export const getLikedTweetsOfProfile = () => {
     return getTweetsOfProfile(true);
+};
+
+export const deleteTweet = (id) => (dispatch, getState) => {
+    const {tweets} = getState();
+    const view = getState().display;
+    if(tweets.isFetching) return;
+
+    return postDeleteTweet(id)
+            .then((data) => {
+                dispatch({type: tweetsActions.DELETE_TWEET, tweetId : id})
+                dispatch({type : auth.UPDATE_USER, user: data.user});
+                if(view === display.PROFILE){
+                    dispatch({type : profileActions.UPDATE_PROFILE, user: data.user});
+                }
+            })
+            .catch(()=>dispatch({type: tweetsActions.ERROR}));
 };

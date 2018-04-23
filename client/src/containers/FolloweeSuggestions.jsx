@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-//import InfiniteScroll from 'react-infinite-scroller';
 import {getFolloweeSuggestions} from '../actions';
 import Spinner from '../components/Spinner';
 import UserBar from '../components/UserBar';
@@ -37,11 +36,6 @@ class FollowSuggestions extends Component {
             <div className="row mt-2 ml-2 p-2 bg-white">
                 <div className="side-label ml-2">
                     Who to follow
-                </div>
-                <div className="ml-auto text-right pt-1">
-                    <span className="view-more">
-                        view more
-                    </span>
                 </div>
                 <div className="col-12">
                     {content()}

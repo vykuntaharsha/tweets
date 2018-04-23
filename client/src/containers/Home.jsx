@@ -11,10 +11,27 @@ import {getTweets} from '../actions';
 
 class Home extends Component{
 
-    componentWillReceiveProps(nextProps){
+    constructor(){
+        super();
+
+        this.retries = 0;
+    }
+
+
+    shouldComponentUpdate(nextProps){
+        if(nextProps.tweets.page === 0 && this.retries > 5){
+            return false;
+        }
+
         if(nextProps.tweets.page === 0){
+            this.retries += 1;
+        }
+        if(nextProps.hasMore){
+            this.retries = 0;
             nextProps.dispatch(getTweets());
         }
+        return true;
+
     }
 
     componentDidMount(){
@@ -23,7 +40,7 @@ class Home extends Component{
     }
 
     render(){
-        const {tweets, dispatch} = this.props;
+        const {tweets, dispatch, user} = this.props;
 
         return (
             <div className="row">
@@ -47,8 +64,9 @@ class Home extends Component{
                         </div> :
 
                         <TweetsList
+                            currentUser = {user}
                             tweets={tweets.content}
-                            hasMore={tweets.hasMore}
+                            hasMore={this.retries >= 5? false : tweets.hasMore}
                             loadMore={getTweets}
                             dispatch={dispatch}
                         />

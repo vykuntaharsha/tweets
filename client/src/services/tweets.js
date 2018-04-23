@@ -52,3 +52,29 @@ export const postToTwitter = (id)=>{
             })
             .then(res => res.status === 200 ? res.json() : Promise.reject('couldnot post'));
 };
+
+export const fetchTweetsOfHashtag = (tag, page = 0) => {
+    const token = localStorage.getItem('sessionToken');
+
+    return fetch(`api/hashtags/${tag}/tweets?page=${page}`,{
+                method : 'GET',
+                headers : {
+                    'Content-Type' : 'application/json',
+                    Authorization : `Bearer ${token}`
+                },
+            })
+            .then(res => res.status === 200 ? res.json() : Promise.reject('couldnot get'));
+};
+
+export const postDeleteTweet = (id) => {
+    const token = localStorage.getItem('sessionToken');
+
+    return fetch(`api/tweets/${id}`,{
+                method : 'DELETE',
+                headers : {
+                    'Content-Type' : 'application/json',
+                    Authorization : `Bearer ${token}`
+                },
+            })
+            .then(res => res.status === 200 ? res.json() : Promise.reject('couldnot delete'));
+};

@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-//import InfiniteScroll from 'react-infinite-scroller';
 import Spinner from '../components/Spinner'
 import {getPopularUsers} from '../actions';
 import UserBar from '../components/UserBar';
@@ -43,11 +42,6 @@ class PopularUsers extends Component {
             <div className="row mt-2 ml-2 p-2 bg-white">
                 <div className="side-label ml-2">
                     Popular users
-                </div>
-                <div className="ml-auto text-right pt-1">
-                    <span className="view-more">
-                        view more
-                    </span>
                 </div>
                 <div className="col-12">
                     {content()}

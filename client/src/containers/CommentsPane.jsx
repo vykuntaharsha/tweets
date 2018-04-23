@@ -87,6 +87,7 @@ class CommentsPane extends Component{
                 />
                 <CommentsList
                     comments={this.state.comments}
+                    dispatch={this.props.dispatch}
                 />
                 {
                     this.state.hasMore ?

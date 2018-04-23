@@ -15,19 +15,36 @@ import UsersList from '../components/UsersList';
 
 class Profile extends Component{
 
-    componentWillReceiveProps(nextProps){
+    constructor(){
+        super();
+
+        this.retries = 0;
+    }
+
+
+    shouldComponentUpdate(nextProps){
         const {profile, dispatch, tweets, users} = nextProps;
-        if(tweets.page === 0 ){
+
+        if((tweets.page === 0  ||  users.page === 0) && this.retries > 5){
+            return false;
+        }
+
+        if(nextProps.tweets.page === 0 || users.page === 0){
+            this.retries += 1;
+        }
+
+        if(tweets.hasMore){
+
             if(profile.display === profileActions.DISPLAY_TWEETS){
                 dispatch(getTweetsOfProfile());
             }
             if(profile.display === profileActions.DISPLAY_LIKES){
                 dispatch(getLikedTweetsOfProfile());
             }
-
         }
 
-        if(users.page === 0 ){
+        if(users.hasMore){
+
             if(profile.display === profileActions.DISPLAY_FOLLOWING){
                 dispatch(getFollowees());
             }
@@ -35,7 +52,8 @@ class Profile extends Component{
                 dispatch(getFollowers());
             }
         }
-
+        this.retries = 0;
+        return true;
 
     }
 
@@ -70,9 +88,10 @@ class Profile extends Component{
                         </div> :
 
                         <TweetsList
+                            currentUser={this.props.user}
                             tweets={tweets.content}
                             loadMore={getTweetsOfProfile}
-                            hasMore={tweets.hasMore}
+                            hasMore={this.retries >= 5 ? false: tweets.hasMore}
                             dispatch={dispatch}
                         />
                     }
@@ -92,7 +111,7 @@ class Profile extends Component{
                         <UsersList
                             users={users.content}
                             loadMore={getFollowers}
-                            hasMore={users.hasMore}
+                            hasMore={this.retries >= 5 ? false: users.hasMore}
                             dispatch={dispatch}
                         />
                      }
@@ -112,7 +131,7 @@ class Profile extends Component{
                         <UsersList
                             users={users.content}
                             loadMore={getFollowees}
-                            hasMore={users.hasMore}
+                            hasMore={this.retries >= 5 ? false: users.hasMore}
                             dispatch={dispatch}
                         />
 
@@ -130,9 +149,10 @@ class Profile extends Component{
                         </div> :
 
                         <TweetsList
+                            currentUser={this.props.user}
                             tweets={tweets.content}
                             loadMore={getLikedTweetsOfProfile}
-                            hasMore={tweets.hasMore}
+                            hasMore={this.retries >= 5 ? false: tweets.hasMore}
                             dispatch={dispatch}
                         />
                     }
@@ -169,9 +189,10 @@ class Profile extends Component{
     }
 }
 const mapStateToProps = state => {
-  const { profile, tweets , users} = state;
+  const { profile, tweets , users, authentication} = state;
 
   return {
+    user : authentication.user,
     profile,
     tweets,
     users

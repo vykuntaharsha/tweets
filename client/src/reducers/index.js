@@ -8,6 +8,7 @@ import {popular} from './popular';
 import {followeeSuggestions} from './followee-suggestions';
 import {share} from './share';
 import {users} from './users';
+import {hashtags} from './hashtags';
 
 export default combineReducers({
     authentication,
@@ -18,5 +19,6 @@ export default combineReducers({
     popular,
     followeeSuggestions,
     share,
-    users
+    users,
+    hashtags
 });

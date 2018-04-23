@@ -80,6 +80,7 @@ class RepliesPane extends Component{
                 <RepliesList
                     replies={this.state.replies}
                     handleReply={this.handleReplyClick}
+                    dispatch={this.props.dispatch}
                 />
                 <img
                     className="replies-profile-img"

@@ -7,6 +7,8 @@ export const tweetsActions={
 
     UPDATE_LIKE   : 'UPDATE_LIKE',
 
+    DELETE_TWEET : 'DELETE_TWEET',
+    
     RESET : 'RESET_TWEETS',
     ERROR : 'ERROR'
 };

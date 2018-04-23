@@ -66,7 +66,9 @@ const Nav = ({isAuthenticated, user, dispatch, view}) => {
                             </a>
                         </li>
                     </ul>
-                    <form className="form-inline mr-lg-2 mt-2 mt-lg-0">
+                    <form className="form-inline mr-lg-2 mt-2 mt-lg-0"
+                        data-tip="not implemented"
+                        data-for="nav-search">
                         <div className="input-group ">
                             <input className="form-control"
                                 ref={node => input = node}
@@ -78,6 +80,10 @@ const Nav = ({isAuthenticated, user, dispatch, view}) => {
                                 </span>
                             </div>
                         </div>
+                        <ReactTooltip
+                            id="nav-search"
+                            place="bottom"
+                        />
                     </form>
                     <div className="mr-2 mt-2 mt-lg-0 ">
                         <div className="dropdown">

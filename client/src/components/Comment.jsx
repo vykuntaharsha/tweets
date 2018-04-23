@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import RepliesPane from '../containers/RepliesPane';
-
+import {displayProfile} from '../actions'
 
 class Comment extends Component {
 
@@ -22,7 +22,7 @@ class Comment extends Component {
 
     renderReplies(){
         if(this.state.clickedReplies){
-            return <RepliesPane comment={this.props.comment}/>;
+            return <RepliesPane comment={this.props.comment} dispatch={this.props.dispatch}/>;
         }
         return '';
     }
@@ -42,7 +42,7 @@ class Comment extends Component {
     }
 
     render(){
-        const {comment} = this.props;
+        const {comment, dispatch} = this.props;
 
         return(
             <div className="comment-container">
@@ -53,7 +53,9 @@ class Comment extends Component {
                         alt="profile"
                     />
                     <a className="comment">
-                        <span className="comment-profile-name">
+                        <span className="comment-profile-name"
+                            onClick={()=>{dispatch(displayProfile(comment.owner.screenName))}}
+                            >
                             {comment.owner.name}
                         </span>
 

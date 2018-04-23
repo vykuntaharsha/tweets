@@ -2,6 +2,10 @@ const User = require('../../../models/user');
 const Tweets = require('../../../models/user');
 
 module.exports = (req, res)=>{
+    if(!req.auth){
+        return res.status(401).json('not authorized');
+    }
+    
     const screenName = req.params.name;
 
     const perPage = parseInt(req.query.limit) || 5;
@@ -32,6 +36,7 @@ module.exports = (req, res)=>{
             const allConnections = docs.map(item=> item.suggestions);
             User.findOne({screenName}).select('followees').lean().exec()
                 .then(docs => {
+                    docs.followees.push(req.auth.id);
                     const idStrings = docs.followees.map(item => item.toString());
 
                     const suggestions = allConnections.filter(item => !idStrings.includes(item._id.toString()));

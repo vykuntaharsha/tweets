@@ -10,7 +10,10 @@ export const profile = (state={
         case auth.LOGIN_SUCCESS:
             return {
                 ...state,
-                user : action.user
+                user : {
+                    ...action.user,
+                    isFollowingByUser : null
+                }
             };
         case profileActions.REQUEST_PROFILE:
             return {
@@ -43,6 +46,21 @@ export const profile = (state={
             return {
                 ...state,
                 display : profileActions.DISPLAY_LIKES
+            };
+        case profileActions.RESET_DISPLAY:
+
+            return {
+                ...state,
+                display : null
+            };
+
+        case profileActions.UPDATE_PROFILE:
+            return {
+                ...state,
+                user : {
+                    ...action.user,
+                    isFollowingByUser : null
+                }
             };
         case profileActions.ERROR:
             return {

@@ -107,6 +107,6 @@ function getProfilePicture(img) {
         return 'http://abs.twimg.com/sticky/default_profile_images/default_profile.png';
     }
 
-    return img.slice(0, -11) +'.png';
+    return img.split('_normal').join('');
 }
 module.exports = User;
